@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+.home-bg {
+    background-image: url(../images/home_bg_img.jpg);
+}
+
+body {
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.panel-login {
+    max-width: 300px;
+    margin-top: 180px;
+    text-align: center;
+}
+
+.form-style {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
