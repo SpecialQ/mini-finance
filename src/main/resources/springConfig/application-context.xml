@@ -12,20 +12,18 @@
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/task 
         http://www.springframework.org/schema/task/spring-task-4.1.xsd">
-
+    
+    <context:component-scan base-package="com.AsiaApe.security" />
     <context:component-scan base-package="com.AsiaApe.service" />
     <context:component-scan base-package="com.AsiaApe.dao" />
-
-    <!-- ==================加载properties配置文件信息==================
-    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-        <property name="locations">
-            <list>
-                <value>classpath:propertiesConfig/WeChatConfig.properties</value>
-            </list>
-        </property>
+    
+    <context:property-placeholder location="classpath:systemConfig/database.properties"/>
+    
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
     </bean>
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
-        <property name="properties" ref="configProperties" />
-    </bean>
-     -->
+    
 </beans>
