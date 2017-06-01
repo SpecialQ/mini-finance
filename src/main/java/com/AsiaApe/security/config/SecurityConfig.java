@@ -5,11 +5,17 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.stereotype.Component;
+
+import com.AsiaApe.security.manager.WebAccessDecisionManager;
+import com.AsiaApe.security.manager.WebFilterSecurityMetadataSource;
 
 /**
  * The name of the configureGlobal method is not important. 
@@ -18,6 +24,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @EnableWebSecurity, @EnableGlobalMethodSecurity, or @EnableGlobalAuthentication. 
  * Doing otherwise has unpredictable results.
  */
+@Component
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
@@ -25,6 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private DataSource dataSource;
+	@Autowired
+	private WebAccessDecisionManager webAccessDecisionManager;
+	@Autowired
+	private WebFilterSecurityMetadataSource webFilterSecurityMetadataSource;
 	
 	public static final String USERS_BY_USERNAME_QUERY = "select username,password,enabled "
 			+ "from user "
@@ -35,11 +46,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				+ "and r.id = rela.role_id "
 				+ "and u.username = ?";
 	
+	@Bean
+	public FilterSecurityInterceptor webFilterSecurityInterceptor(){
+		FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
+		filterSecurityInterceptor.setAccessDecisionManager(webAccessDecisionManager);
+		filterSecurityInterceptor.setSecurityMetadataSource(webFilterSecurityMetadataSource.init());
+		return filterSecurityInterceptor;
+	}
+	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web
 			.ignoring()
-				.antMatchers("/resources/**");
+				.antMatchers("/resources/**")
+				.antMatchers("/login.do");
 	}
 	
 	@Override
@@ -59,7 +79,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        	.and()
 	        .httpBasic()
 	        	.and()
-	        .csrf().disable();
+	        .csrf().disable()
+	        .addFilterBefore(webFilterSecurityInterceptor(), FilterSecurityInterceptor.class);
 	}
 	
 	@Autowired

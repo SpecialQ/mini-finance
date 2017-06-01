@@ -10,32 +10,30 @@
 </head>
 <body class="home-bg">
     <div class=".container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-1">
-                <div class="panel panel-login">
-                    <div class="panel-heading">
-                        <h3 class="panel-title" style="color: white;">Welcome</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form action="login" method="post">
-                            <div class="input-group form-style">
-                                <div class="input-group-addon" id="input-username" aria-hidden="true">
-                                    <span class="glyphicon glyphicon-user"></span>
-                                </div>
-                                <input name="username" type="text" class="form-control" placeholder="Please enter your account" aria-describedby="input-username">
+        <div class="col-md-4 col-md-offset-1">
+            <div class="panel-login panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title" style="color: white;">Welcome</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="login" method="post">
+                        <div class="form-style input-group">
+                            <div class="input-group-addon" id="input-username" aria-hidden="true">
+                                <span class="glyphicon glyphicon-user"></span>
                             </div>
-                            <div class="input-group form-style">
-                                <div class="input-group-addon" id="input-password" aria-hidden="true">
-                                    <span class="glyphicon glyphicon-lock"></span>
-                                </div>
-                                <input name="password" type="password" class="form-control" placeholder="Please enter your password" aria-describedby="input-password">
+                            <input name="username" type="text" class="form-control" placeholder="Please enter your account" aria-describedby="input-username">
+                        </div>
+                        <div class="form-style input-group">
+                            <div class="input-group-addon" id="input-password" aria-hidden="true">
+                                <span class="glyphicon glyphicon-lock"></span>
                             </div>
-                            <button type="submit" class="form-style" >Sign In</button>
-                        </form>
-                        <form action="logout" method="post">
-                            <button type="submit">logout</button>
-                        </form>
-                    </div>
+                            <input name="password" type="password" class="form-control" placeholder="Please enter your password" aria-describedby="input-password">
+                        </div>
+                        <button type="submit" class="form-style" >Sign In</button>
+                    </form>
+                    <form action="logout" method="post">
+                        <button type="submit">logout</button>
+                    </form>
                 </div>
             </div>
         </div>
