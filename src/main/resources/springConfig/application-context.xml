@@ -34,6 +34,6 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
     
-    <context:component-scan base-package="com.AsiaApe.dao
+    <context:component-scan base-package="com.AsiaApe.config
                                             ,com.AsiaApe.security" />
 </beans>

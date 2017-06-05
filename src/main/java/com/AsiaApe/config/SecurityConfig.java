@@ -1,4 +1,4 @@
-package com.AsiaApe.security.config;
+package com.AsiaApe.config;
 
 import javax.sql.DataSource;
 
@@ -72,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .formLogin()
 	            .loginPage("/login.do").permitAll()
 	            .loginProcessingUrl("/login")
-	            .successForwardUrl("/views/Success.html")
+	            .successForwardUrl("/views/console.html")
 	            .and()
 	        .logout()
 	        	.permitAll()
