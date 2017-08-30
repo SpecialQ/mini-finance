@@ -11,13 +11,21 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+/**
+ * spring securityæ¨¡å—ç”¨æˆ·èµ„æºæƒé™è®¿é—®æ£€æŸ¥
+ * @author SpecialQ
+ */
 @Component("webAccessDecisionManager")
 public class WebAccessDecisionManager implements AccessDecisionManager {
 
-	//¼ì²éÓÃ»§ÊÇ·ñ¹»È¨ÏŞ·ÃÎÊ×ÊÔ´
-    //²ÎÊıauthenticationÊÇ´ÓspringµÄÈ«¾Ö»º´æSecurityContextHolderÖĞÄÃµ½µÄ£¬ÀïÃæÊÇÓÃ»§µÄÈ¨ÏŞĞÅÏ¢
-    //²ÎÊıobjectÊÇurl
-    //²ÎÊıconfigAttributesËùĞèµÄÈ¨ÏŞ
+	/**
+	 * å¾ªç¯æ‰€æœ‰æ‰€éœ€çš„æƒé™é›†åˆï¼Œå¹¶å¾ªç¯ç”¨æˆ·æƒé™ï¼Œæ£€æŸ¥ç”¨æˆ·æ˜¯å¦æ‹¥æœ‰ç›¸åº”æƒé™ï¼Œ
+	 * å¦‚æœæ— åŒ¹é…çš„å¯¹åº”æƒé™ï¼Œåˆ™æŠ›å‡ºAccessDeniedExceptionçš„403é”™è¯¯ã€‚
+	 * 
+	 * å‚æ•°authenticationæ˜¯ä»springçš„å…¨å±€ç¼“å­˜SecurityContextHolderä¸­æ‹¿åˆ°çš„ï¼Œé‡Œé¢æ˜¯ç”¨æˆ·æ‹¥æœ‰çš„æƒé™ä¿¡æ¯
+	 * å‚æ•°objectæ˜¯è¯·æ±‚çš„urlåœ°å€
+	 * å‚æ•°configAttributesæ‰€éœ€çš„æƒé™
+	 */
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.AsiaApe.dao.MenuDao" >
+    <resultMap id="menus" type="menuTree">
+        <id property="id" column="menu_id"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="iconPath" column="icon_path"/>
+        <result property="href" column="href"/>
+        <result property="isLeaf" column="isleaf"/>
+        <result property="orderId" column="order_id"/>
+        <result property="parentId" column="parent_id"/>
+    </resultMap>
+    <select id="getAuthorizationMenu" parameterType="string" resultMap="menus">
+		SELECT 
+		    m.id menu_id,
+		    m.menu_name,
+		    m.icon_path,
+		    m.href,
+		    m.isleaf,
+		    m.order_id,
+		    m.auth_id,
+		    p.id parent_id
+		FROM
+		    menu m
+		        LEFT JOIN
+		    menu p ON m.parent_id = p.id
+		        LEFT JOIN
+		    role_auth_rela a ON m.auth_id = a.auth_id
+		WHERE
+		    a.role_id IN (SELECT 
+		            r.role_id
+		        FROM
+		            user u,
+		            user_role_rela r
+		        WHERE
+		            u.id = r.user_id AND u.id = #{username})
+		        OR a.role_id IS NULL
+		GROUP BY menu_id
+		ORDER BY m.parent_id, m.order_id
+    </select>
+    <select id="getAuthorizationNode" resultMap="menus">
+        SELECT 
+            m.id menu_id,
+            m.menu_name,
+            m.icon_path,
+            m.href,
+            m.isleaf,
+            m.order_id,
+            m.auth_id,
+            p.id parent_id
+        FROM
+            menu m
+                LEFT JOIN
+            menu p ON m.parent_id = p.id
+                LEFT JOIN
+            role_auth_rela a ON m.auth_id = a.auth_id
+        WHERE
+            role_id IN (SELECT 
+                    role_id
+                FROM
+                    user u,
+                    user_role_rela r
+                WHERE
+                    u.id = r.user_id AND u.id = #{username})
+        GROUP BY menu_id
+        HAVING parent_id = #{nodeId}
+        ORDER BY order_id
+    </select>
+    <select id="searchAuthorizationNodes" resultMap="menus">
+        SELECT 
+		    m.id menu_id,
+		    m.menu_name,
+		    m.icon_path,
+		    m.href,
+		    m.isleaf,
+		    m.order_id,
+		    m.auth_id,
+		    p.id parent_id
+		FROM
+		    menu m
+		        LEFT JOIN
+		    menu p ON m.parent_id = p.id
+		        LEFT JOIN
+		    role_auth_rela a ON m.auth_id = a.auth_id
+		WHERE
+		    role_id IN (SELECT 
+		            role_id
+		        FROM
+		            user u,
+		            user_role_rela r
+		        WHERE
+		            u.id = r.user_id AND u.id = #{username})
+		        OR a.role_id IS NULL
+		GROUP BY menu_id
+		HAVING menu_name LIKE #{nodeName} AND isleaf = 1
+    </select>
+</mapper>

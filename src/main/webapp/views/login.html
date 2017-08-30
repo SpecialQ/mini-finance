@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html lang="zh-CN"
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>财务管理系统登录页面</title>
-    <link href="resources/js/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <link href="resources/css/style.css" rel="stylesheet" />
+    <link th:href="@{/resources/third/bootstrap-3.3.5/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/resources/custom/css/style.css}" rel="stylesheet" />
 </head>
 <body class="home-bg">
     <div class="container">
         <div class="col-md-4">
             <div class="panel-login panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title" style="color: white;">Welcome</h3>
-                    <span th:text="${error}" style="color: white;"></span>
+                    <p class="panel-title" style="color: white;">Welcome</p>
                 </div>
                 <div class="panel-body">
+                    <div th:if="${error!=null}">
+                        <samp class="text-danger" th:text="${error}"></samp>
+                    </div>
+                    <div th:if="${msg!=null}">
+                        <samp class="text-info" th:text="${msg}"></samp>
+                    </div>
                     <form action="login" method="post">
                         <div class="form-style input-group">
                             <div class="input-group-addon" id="input-username" aria-hidden="true">
@@ -32,13 +35,13 @@
                             </div>
                             <input name="password" type="password" class="form-control" placeholder="Please enter your password" aria-describedby="input-password">
                         </div>
-                        <button type="submit" class="col-md-12 form-style" >Sign In</button>
+                        <button type="submit" class="btn btn-default btn-sm btn-block" >Sign In</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <script src="resources/js/jquery-3.1.1.min.js"></script>
-    <script src="resources/js/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <script th:src="@{/resources/third/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/resources/third/bootstrap-3.3.5/js/bootstrap.min.js}"></script>
 </body>
 </html>

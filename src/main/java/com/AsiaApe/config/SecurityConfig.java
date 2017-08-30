@@ -2,8 +2,6 @@ package com.AsiaApe.config;
 
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,8 +25,6 @@ import com.AsiaApe.security.manager.WebFilterSecurityMetadataSource;
 @Component
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 	
 	@Autowired
 	private DataSource dataSource;
@@ -64,16 +60,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		logger.debug("Using SecurityConfig(HttpSecurity).");
 		http
 	        .authorizeRequests()
-	            .anyRequest().authenticated()
+	            .anyRequest().authenticated()    //尚未匹配的任何URL要求用户进行身份验证
 	            .and()
 	        .formLogin()
-	            .loginPage("/login.do").permitAll()
-	            .loginProcessingUrl("/login")
-	            .successForwardUrl("/views/console.html")
-	            .and()
+	            .loginPage("/login.do").permitAll()    // 允许所有用户访问我们登录页
+	            .loginProcessingUrl("/login")    // 指定一个POST请求用来验证用户
+				.successForwardUrl("/redirect.do?"
+						+ "templateName=homePage&"
+						+ "selector=home")    // 设置登陆成功后的页面路径
+				.and()
 	        .logout()
 	        	.permitAll()
 	        	.and()
@@ -85,7 +82,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		logger.debug("# SecurityConfig.configureGlobal(AuthenticationManagerBuilder auth)");
         auth
         	.jdbcAuthentication()
         		.dataSource(dataSource)

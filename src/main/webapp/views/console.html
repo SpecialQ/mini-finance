@@ -1,31 +1,69 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{common :: header}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>控制台管理系统</title>
-    <link href="resources/js/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <link href="resources/css/style.css" rel="stylesheet" />
 </head>
 <body>
+    <!-- 标题栏模块 -->
     <div class="container-fluid">
-        <div class="row" style="vertical-align: bottom;">
-            <div class="col-md-4" style="background-color: red;">
+        <div class="row top-header">
+            <div class="col-md-4" style="color: white;">
                 AsiaApe.<span>Admin</span>
-            </div>
-            <div class="col-md-2" style="background-color:lime;">
                 <span>后台管理系统</span>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
+                <div class="user-info-window">
+                    <img class="img-rounded" src="resources/images/Lego_Ape_Suit_72px.png" alt="">
+                    <span style="color: white;">管理员</span>
+                </div>
             </div>
         </div>
-        <div>
-            
-        </div>
-        
     </div>
-    <script src="resources/js/jquery-3.1.1.min.js"></script>
-    <script src="resources/js/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    
+    <!-- 导航条模块 -->
+    <nav class="navbar navbar-default header-navbar-style">
+        <div class="container-fluid" >
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="redirect.do?templateName=homePage&selector=home">Neusoft</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul id="nav_ul" class="nav navbar-nav" th:each="node,iterStat : ${nodes}">
+                    <li th:id="|nav_menus_${node.id}|" th:name="nav_menus">
+                        <a href="#" th:text="${node.menuName}" th:onclick="|initMenus('${iterStat.index}');changeNavbarClass(node.id);|"></a>
+                    </li>
+                </ul>
+                <div class="navbar-form navbar-left">
+                    <form onsubmit="getNodesByName();changeNavbarClass();return false;">
+                        <div class="form-group">
+                            <input id="search" type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 导航路径模块 -->
+    <div>
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active">Data</li>
+        </ol>
+    </div>
+    
+    <!-- 左边栏 -->
+    <div class="col-md-3" th:insert="~{leftArea :: menuTree}"></div>
+    <!-- 右边栏 -->
+    <div class="col-md-9" th:insert="~{${templateName} :: ${selector}}"></div>
 </body>
 </html>

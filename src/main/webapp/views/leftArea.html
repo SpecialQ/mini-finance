@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{common :: header}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body th:fragment="menuTree">
+    <!-- 左边栏 -->
+    <div id="menuTree"></div>
+    
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(initMenus(0));
+        
+        function initMenus(index){
+        	var menus = [[${menus}]];
+        	buildTree(menus[index]);
+        }
+        
+        function getNodesByName(){
+            var nodeName = $("#search").val();
+            $.ajax({
+                url: "getNodesByName.do",
+                data: "nodeName="+nodeName,
+                success: function(data){
+                    buildTree(data);
+                },
+                error: function(){
+                    alert("菜单数据获取异常！");
+                }
+            });
+        }
+        
+        function buildTree(treeData){
+        	var data = eval(treeData);
+            $("#menuTree").treeview({
+                levels: 1,//设置默认的展开级别
+                expandIcon: "glyphicon glyphicon-menu-left",//设置展开图标样式
+                collapseIcon: "glyphicon glyphicon-menu-down",//设置搜索图标样式
+                highlightSelected: true,//被选节点是否高亮显示
+                showTags: true,//是否显示tags标记
+                selectedBackColor: "#FFFFFF",//设置被选节点的背景颜色
+                selectedColor: "#ff6600",//设置被选节点的字体颜色
+                onNodeSelected: function(event, node) {
+                	window.location.href=node.href+"&selectNodeId="+node.id;
+                },//设置节点选中事件
+                data: data
+            });
+        }
+        
+        function changeNavbarClass(nodeId){
+        	if (nodeId != null) {
+        		$("li[id^='nav_menus_']").removeClass("active");
+                $("#nav_menus_"+nodeId).addClass("active");
+			}
+        }
+    </script>
+</body>
+</html>

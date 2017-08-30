@@ -14,6 +14,11 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+/**
+ * springMvc配置
+ * 
+ * @author SpecialQ
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.AsiaApe.controller")
@@ -60,7 +65,7 @@ public class WebConfig
         templateResolver.setTemplateMode(TemplateMode.HTML);
         // Template cache is true by default. Set to false if you want
         // templates to be automatically updated when modified.
-        templateResolver.setCacheable(true);
+        templateResolver.setCacheable(false);
         templateResolver.setCharacterEncoding("utf-8");
         return templateResolver;
     }

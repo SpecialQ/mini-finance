@@ -3,12 +3,21 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.AsiaApe.dao.UserDao" >
-    <select id="getUser" parameterType="string" resultType="user">
+    <select id="getAllUser" parameterType="string" resultType="user">
         SELECT 
-		    id, username, password, create_time AS createTime, enabled
+		    id,
+		    username,
+		    password,
+		    DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS createTime,
+		    enabled,
+		    phone,
+		    email,
+		    address,
+		    alias,
+		    sex
 		FROM
-		    user
-		WHERE
-		    username = #{username}
+		    user u
+		        LEFT JOIN
+		    user_ext u_ext ON u.id = u_ext.user_id
     </select>
 </mapper>

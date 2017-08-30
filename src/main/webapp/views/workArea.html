@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body th:fragment="table">
+    <!-- 右边栏 -->
+    <table id="table"></table>
+    
+    <script type="text/javascript">
+        $(document).ready(getUserInfo());
+        
+        function getUserInfo(){
+            var data = [{id: '10',username: '杨漱<奇>',createTime: '123456778',enabled: '无效'},{id: '1',username: '杨漱奇',createTime: null,enabled: '有效'},{id: '0',username: '',createTime: '2017-05-30 12:20:33',enabled: '有效'},{id: '2',username: '戴文明',createTime: '2017-05-30 13:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'},{id: '3',username: '薛霏',createTime: '2017-05-30 14:20:33',enabled: '有效'}];
+            $("#table").bootstrapTable({
+                columns: [{
+                    field: 'id',
+                    title: '用户ID',
+                    visible: false
+                },{
+                    field: 'username',
+                    title: '用户名',
+                    titleTooltip: '你妹的ID',
+                    sortable: true,
+                    valign:'middle'
+                },{
+                    field: 'createTime',
+                    title: '创建时间'
+                },{
+                    field: 'enabled',
+                    title: '状态'
+                }],
+                striped: false,
+                sortName: '0',
+                pagination: true,
+                pageNumber: 1,
+                pageSize: 5,
+                sortStable: true,
+                iconsPrefix: 'glyphicon glyphicon-user',
+                selectItemName: 'id',
+                
+                search: true,
+                searchOnEnterKey: false,
+                strictSearch: false,
+                showHeader: true,
+                showFooter: false,
+                showColumns: true,
+                showRefresh: true,
+                showToggle: true,
+                showPaginationSwitch: false,
+                paginationLoop: true,
+                minimumCountColumns: 1,
+                idField: 'id',
+                uniqueId: 'username',
+                escape: true,
+                searchAlign: 'right',
+                buttonsAlign: 'left',
+                paginationVAlign: 'bottom',
+                paginationHAlign: 'right',
+                paginationDetailHAlign: 'left',
+                data: data
+            });
+        }
+    </script>
+</body>
+</html>

@@ -13,6 +13,13 @@ public class LoginController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
+	/**
+	 * 登陆页面
+	 * 
+	 * @param error 错误信息
+	 * @param logout 登出信息
+	 * @return 登陆页面模型
+	 */
 	@RequestMapping(value="login", method=RequestMethod.GET)
 	public ModelAndView login(
 			@RequestParam(value = "error", required = false) String error,
@@ -21,11 +28,9 @@ public class LoginController {
 		
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
-			logger.debug("error message :" + error);
 			model.addObject("error", "Invalid username and password!");
 		}
 		if (logout != null) {
-			logger.debug("logout message :" + logout);
 			model.addObject("msg", "You've been logged out successfully.");
 		}
 		model.setViewName("login");

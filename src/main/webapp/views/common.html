@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>控制台管理系统</title>
+    
+    <!-- 第三方JS库 -->
+    <script th:src="@{/resources/third/jquery-3.1.1/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/resources/third/bootstrap-3.3.5/js/bootstrap.min.js}"></script>
+    <script th:src="@{/resources/third/bootstrap-table-1.11.1/dist/bootstrap-table.min.js}"></script>
+    <script th:src="@{/resources/third/bootstrap-table-1.11.1/dist/locale/bootstrap-table-zh-CN.js}"></script>
+    <script th:src="@{/resources/third/bootstrap-table-1.11.1/dist/extensions/export/bootstrap-table-export.min.js}"></script>
+    <script th:src="@{/resources/third/tableExport-jquery-plugin-1.9.3/libs/FileSaver/FileSaver.min.js}"></script>
+    <script th:src="@{/resources/third/tableExport-jquery-plugin-1.9.3/libs/js-xlsx/xlsx.core.min.js}"></script>
+    <script th:src="@{/resources/third/tableExport-jquery-plugin-1.9.3/tableExport.min.js}"></script>
+    <script th:src="@{/resources/third/bootstrapvalidator-0.5.4/dist/js/bootstrapValidator.min.js}"></script>
+    <!-- 本地JS库 -->
+    <script th:src="@{/resources/custom/js/bootstrap-treeview.js}"></script>
+    <script th:src="@{/resources/custom/js/tableview.js}"></script>
+    
+    <!-- 第三方CSS库 -->
+    <link th:href="@{/resources/third/bootstrap-3.3.5/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/resources/third/bootstrap-table-1.11.1/dist/bootstrap-table.min.css}" rel="stylesheet">
+    <link th:href="@{/resources/third/bootstrapvalidator-0.5.4/dist/css/bootstrapValidator.min.css}" rel="stylesheet">
+    <!-- 本地CSS库 -->
+    <link th:href="@{/resources/custom/css/bootstrap-treeview.css}" rel="stylesheet">
+    <link th:href="@{/resources/custom/css/style.css}" rel="stylesheet" />
+</head>
+</html>

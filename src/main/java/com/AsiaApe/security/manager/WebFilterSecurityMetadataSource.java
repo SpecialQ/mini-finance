@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -28,6 +29,9 @@ public class WebFilterSecurityMetadataSource implements FilterInvocationSecurity
 	
 	private static final Logger logger = LoggerFactory.getLogger(WebFilterSecurityMetadataSource.class);
 	
+	/**
+	 * 各URL请求及对应权限仓库
+	 */
     private static Map<RequestMatcher, Collection<ConfigAttribute>> resourceMap = null;
     
     @Autowired
@@ -38,6 +42,9 @@ public class WebFilterSecurityMetadataSource implements FilterInvocationSecurity
     	return this;
     }
     
+    /**
+     * 初始化加载所有系统授权信息。
+     */
 	private void loadResourceDefine() {
 		resourceMap = new HashMap<RequestMatcher, Collection<ConfigAttribute>>();
 		List<Authorization> authorizations = authDao.getAllAuthorizations();
@@ -50,19 +57,27 @@ public class WebFilterSecurityMetadataSource implements FilterInvocationSecurity
 			}
 			RequestMatcher requestMatcher = new AntPathRequestMatcher(auth.getPath());
 			resourceMap.put(requestMatcher, ConfigAttributes);
-			logger.debug("������Ȩ��Դ��{}����Ȩ��ɫ��{}", requestMatcher.toString(), roles.toString());
+			logger.debug("加载授权资源：{}，授权角色：{}", requestMatcher.toString(), roles.toString());
 		}
 	}
     
+	/**
+	 * 获取所有对应路径的授权角色，
+	 * 若无对应授权角色，则抛出AccessDeniedException的403错误。
+	 */
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		final HttpServletRequest request = ((FilterInvocation) object).getRequest();
+		Collection<ConfigAttribute> result = new ArrayList<ConfigAttribute>();
 		for (Map.Entry<RequestMatcher, Collection<ConfigAttribute>> entry : resourceMap.entrySet()) {
 			if (entry.getKey().matches(request)) {
-				return entry.getValue();
+				result.addAll(entry.getValue());
 			}
 		}
-		return null;
+		if (result.size() <= 0) {
+			throw new AccessDeniedException("no right");
+		}
+		return result;
 	}
 
 	@Override

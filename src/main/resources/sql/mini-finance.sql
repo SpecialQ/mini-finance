@@ -83,3 +83,25 @@ ENGINE = InnoDB;
 INSERT INTO `mini-finance`.`role_auth_rela` (`role_id`, `auth_id`) VALUES (0, 0);
 INSERT INTO `mini-finance`.`role_auth_rela` (`role_id`, `auth_id`) VALUES (0, 1);
 
+CREATE TABLE IF NOT EXISTS `mini-finance`.`menu` (
+  `id` VARCHAR(32) NOT NULL,
+  `menu_name` VARCHAR(64) NOT NULL,
+  `icon_path` VARCHAR(60) NULL,
+  `href` VARCHAR(128) NULL,
+  `isleaf` TINYINT(1) NOT NULL COMMENT '0 - 菜单目录\n1 - 菜单',
+  `parent_id` VARCHAR(32) NULL,
+  `auth_id` BIGINT NULL,
+  `order_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_menu_auth_id_idx` (`auth_id` ASC),
+  CONSTRAINT `fk_menu_auth_id`
+    FOREIGN KEY (`auth_id`)
+    REFERENCES `mini-finance`.`authorization` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+INSERT INTO `mini-finance`.`menu` (`id`, `menu_name`, `icon_path`, `isleaf`, `href`, `parent_id`, `auth_id`, `order_id`) VALUES ('root', '根目录', NULL, NULL, 0, NULL, NULL, 0);
+INSERT INTO `mini-finance`.`menu` (`id`, `menu_name`, `icon_path`, `isleaf`, `href`, `parent_id`, `auth_id`, `order_id`) VALUES ('powerManage', '权限管理', NULL, NULL, 0, 'root', NULL, 0);
+INSERT INTO `mini-finance`.`menu` (`id`, `menu_name`, `icon_path`, `isleaf`, `href`, `parent_id`, `auth_id`, `order_id`) VALUES ('businessManage', '业务管理', NULL, NULL, 0, 'root', NULL, 1);
+INSERT INTO `mini-finance`.`menu` (`id`, `menu_name`, `icon_path`, `isleaf`, `href`, `parent_id`, `auth_id`, `order_id`) VALUES ('financeManage', '财务管理', NULL, NULL, 0, 'root', NULL, 2);
+INSERT INTO `mini-finance`.`menu` (`id`, `menu_name`, `icon_path`, `isleaf`, `href`, `parent_id`, `auth_id`, `order_id`) VALUES ('userManage', '用户管理', NULL, NULL, 1, 'powerManage', NULL, 0);
