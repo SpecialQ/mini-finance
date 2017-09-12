@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +34,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private WebAccessDecisionManager webAccessDecisionManager;
 	@Autowired
 	private WebFilterSecurityMetadataSource webFilterSecurityMetadataSource;
+	
+	private static final String SECRET = "yangshuqi";
+	
+	private static final PasswordEncoder passwordEncoder = new StandardPasswordEncoder(SECRET);
+	
 	
 	public static final String USERS_BY_USERNAME_QUERY = "select username,password,enabled "
 			+ "from user "
@@ -85,6 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
         	.jdbcAuthentication()
         		.dataSource(dataSource)
+        		.passwordEncoder(passwordEncoder)
         		.usersByUsernameQuery(USERS_BY_USERNAME_QUERY)
         		.authoritiesByUsernameQuery(AUTHORITIES_BY_USERNAME_QUERY);
 	}
